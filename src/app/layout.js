@@ -1,8 +1,8 @@
-import { Quicksand } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin", "vietnamese"],
 });
 
@@ -11,11 +11,15 @@ export const metadata = {
   description: "AI Tra Cứu Luật là 1 sản phẩm công nghệ đột phá trong việc hỗ trợ và tư vấn pháp lý.",
 };
 
+import AuthGuard from "../components/AuthGuard";
+
 export default function RootLayout({ children }) {
   return (
     <html lang="vi">
-      <body className={quicksand.variable}>
-        {children}
+      <body className={inter.variable}>
+        <AuthGuard>
+          {children}
+        </AuthGuard>
       </body>
     </html>
   );

@@ -1,11 +1,11 @@
 :root {
-  --font-sans: var(--font-quicksand), sans-serif;
-  --primary: #009EC1;
-  --primary-hover: #00819E;
-  --secondary: #033351;
+  --font-sans: var(--font-inter), sans-serif;
+  --primary: #8B5CF6; /* violet-500 */
+  --primary-hover: #7C3AED; /* violet-600 */
+  --secondary: #F97316; /* orange-500 */
   --bg-main: #FFFFFF;
-  --bg-sidebar: #F8FAFC;
-  --bg-secondary: #F1F5F9;
+  --bg-sidebar: #FAF5FF; /* Light purple */
+  --bg-secondary: #FFF7ED; /* Light orange */
   --border-light: #E2E8F0;
   --text-heading: #0F172A;
   --text-body: #334155;
@@ -29,7 +29,7 @@
 
 body {
   font-family: var(--font-sans);
-  background: linear-gradient(-45deg, #e0f2fe, #fdf4ff, #e0e7ff, #cffafe);
+  background: linear-gradient(-45deg, #f3e8ff, #ffedd5, #fae8ff, #fff7ed);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
   color: var(--text-body);

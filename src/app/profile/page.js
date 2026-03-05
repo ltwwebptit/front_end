@@ -27,7 +27,7 @@ export default function ProfilePage() {
             <div className={styles.userInfo}>
               <h2 className={styles.userName}>Trần Anh Tài</h2>
               <p className={styles.userEmail}>tai.tran@example.com</p>
-              <div className={styles.planBadge}>Premium</div>
+
             </div>
           </div>
 
@@ -40,12 +40,7 @@ export default function ProfilePage() {
               >
                 <User size={18} /> Tài khoản
               </button>
-              <button 
-                className={`${styles.tabBtn} ${activeTab === 'subscription' ? styles.activeTab : ''}`}
-                onClick={() => setActiveTab('subscription')}
-              >
-                <CreditCard size={18} /> Gói cước
-              </button>
+
               <button 
                 className={`${styles.tabBtn} ${activeTab === 'preferences' ? styles.activeTab : ''}`}
                 onClick={() => setActiveTab('preferences')}
@@ -97,63 +92,7 @@ export default function ProfilePage() {
                 </div>
               )}
 
-              {activeTab === 'subscription' && (
-                <div className={styles.panelSection}>
-                  <h3 className={styles.panelTitle}>Quản lý gói cước</h3>
-                  <p className={styles.panelSubtitle}>Chi tiết về gói sử dụng và giới hạn API của bạn.</p>
-                  
-                  <div className={styles.planCard}>
-                    <div className={styles.planHeader}>
-                      <div>
-                        <div className={styles.planName}>Chuyên gia Premium</div>
-                        <div className={styles.planPrice}>299.000đ <span>/ Tháng</span></div>
-                      </div>
-                      <div className={styles.planStatus}>Đang hoạt động</div>
-                    </div>
-                    
-                    <div className={styles.usageTrack}>
-                      <div className={styles.usageHeader}>
-                        <span>Truy vấn AI</span>
-                        <span>1,200 / Không giới hạn</span>
-                      </div>
-                      <div className={styles.progressBar}>
-                        <div className={styles.progressFill} style={{width: '65%'}}></div>
-                      </div>
-                    </div>
-                    
-                    <div className={styles.planActions}>
-                      <button className={styles.outlineBtn}>Hủy gói</button>
-                      <Link href="/pricing" className={styles.primaryBtn}>Thay đổi gói</Link>
-                    </div>
-                  </div>
-                  
-                  <h4 className={styles.tableTitle}>Lịch sử thanh toán</h4>
-                  <table className={styles.historyTable}>
-                    <thead>
-                      <tr>
-                        <th>Ngày</th>
-                        <th>Gói</th>
-                        <th>Số tiền</th>
-                        <th>Trạng thái</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>04/03/2026</td>
-                        <td>Premium</td>
-                        <td>299.000đ</td>
-                        <td><span className={styles.statusSuccess}>Thành công</span></td>
-                      </tr>
-                      <tr>
-                        <td>04/02/2026</td>
-                        <td>Premium</td>
-                        <td>299.000đ</td>
-                        <td><span className={styles.statusSuccess}>Thành công</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
+
 
               {activeTab === 'preferences' && (
                 <div className={styles.panelSection}>

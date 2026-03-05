@@ -54,7 +54,7 @@
 .chatContainer {
   flex: 1;
   overflow-y: auto;
-  padding: 3rem 1.5rem 120px; /* Increased top padding */
+  padding: 3rem 1.5rem 240px; /* Increased bottom padding to avoid input area overlap */
   display: flex;
   flex-direction: column;
 }
@@ -122,7 +122,7 @@
 }
 
 .dropdownItem:hover {
-  background: rgba(0, 158, 193, 0.05);
+  background: rgba(139, 92, 246, 0.05);
   color: var(--primary);
 }
 
@@ -167,7 +167,7 @@
   backdrop-filter: blur(10px);
   padding: 1.5rem;
   border-radius: var(--radius-xl);
-  box-shadow: 0 15px 35px rgba(0, 158, 193, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
   color: var(--primary);
   transform: translateY(0);
   animation: float 6s ease-in-out infinite;
@@ -188,7 +188,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(to right, #009EC1, #8B5CF6, #EC4899);
+  background: linear-gradient(to right, #8B5CF6, #F97316, #EC4899);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -237,9 +237,9 @@
 
 .suggestionChip:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 1) 100%);
-  border-color: rgba(0, 158, 193, 0.6);
+  border-color: rgba(139, 92, 246, 0.6);
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(0, 158, 193, 0.15);
+  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.15);
   color: var(--primary);
 }
 
@@ -282,11 +282,11 @@
 }
 
 .msgUser .messageBubble {
-  background: linear-gradient(135deg, var(--primary) 0%, #0284c7 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #7C3AED 100%);
   border: none;
   color: white;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 15px rgba(0, 158, 193, 0.25);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
 }
 
 .msgAi .messageBubble {
@@ -360,8 +360,8 @@
 }
 
 .inputForm:focus-within {
-  border-color: rgba(0, 158, 193, 0.6);
-  box-shadow: 0 25px 45px -5px rgb(0 158 193 / 0.15), 0 10px 20px -6px rgb(0 158 193 / 0.1), inset 0 0 0 1px rgba(255,255,255,0.8);
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 25px 45px -5px rgb(139 92 246 / 0.15), 0 10px 20px -6px rgb(139 92 246 / 0.1), inset 0 0 0 1px rgba(255,255,255,0.8);
   transform: translateY(-4px);
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -435,7 +435,7 @@
 .sendActive {
   background-color: var(--primary);
   color: white;
-  box-shadow: 0 4px 10px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
 }
 
 .sendActive:hover {

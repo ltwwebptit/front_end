@@ -32,20 +32,20 @@
 }
 
 .logoIconBg {
-  background: linear-gradient(135deg, #009EC1 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #F97316 0%, #8B5CF6 100%);
   width: 38px;
   height: 38px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 15px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3);
 }
 
 .logoText {
   font-size: 1.25rem;
   font-weight: 800;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -71,11 +71,11 @@
 }
 
 .newChatBtn:hover {
-  background: linear-gradient(to right, #009EC1, #007B99);
+  background: linear-gradient(to right, #F97316, #EA580C);
   color: white;
   border-color: transparent;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
 }
 
 .navMenu {
@@ -156,7 +156,7 @@
 }
 
 .upgradeCard {
-  background: linear-gradient(135deg, rgba(0, 158, 193, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.6);
@@ -189,7 +189,7 @@
 
 .upgradeBtn {
   width: 100%;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   color: white;
   padding: 0.6rem;
   border-radius: var(--radius-md);

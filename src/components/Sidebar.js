@@ -3,21 +3,34 @@
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Scale, MessageSquarePlus, MessageSquare, FileText, HelpCircle, User, Sparkles } from 'lucide-react';
+import { MessageSquarePlus, MessageSquare, FileText, HelpCircle, User, Sparkles, History } from 'lucide-react';
+import AiGavelIcon from './AiGavelIcon';
 
-export default function Sidebar() {
+export default function Sidebar({ onNewChat }) {
   const pathname = usePathname();
+
+  const handleNewChat = (e) => {
+    if (pathname === '/') {
+      e.preventDefault();
+      if (onNewChat) onNewChat();
+    }
+  };
 
   return (
     <aside className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
         <Link href="/" className={styles.logo} style={{ textDecoration: 'none' }}>
           <div className={styles.logoIconBg}>
-            <Scale size={22} color="white" />
+            <AiGavelIcon size={22} color="white" />
           </div>
           <span className={styles.logoText}>AI Tra Cứu Luật</span>
         </Link>
-        <Link href="/" className={styles.newChatBtn} style={{ textDecoration: 'none' }}>
+        <Link 
+          href="/" 
+          className={styles.newChatBtn} 
+          style={{ textDecoration: 'none' }}
+          onClick={handleNewChat}
+        >
           <MessageSquarePlus size={18} /> Chat Mới
         </Link>
       </div>
@@ -32,6 +45,11 @@ export default function Sidebar() {
               </Link>
             </li>
             <li>
+              <Link href="/history" className={`${styles.navItem} ${pathname === '/history' ? styles.navActive : ''}`}>
+                <History size={18} /> Lịch sử Chat
+              </Link>
+            </li>
+            <li>
               <Link href="/documents" className={`${styles.navItem} ${pathname === '/documents' ? styles.navActive : ''}`}>
                 <FileText size={18} /> Văn bản pháp lý
               </Link>
@@ -42,23 +60,13 @@ export default function Sidebar() {
               </Link>
             </li>
             <li>
-              <a href="#" className={styles.navItem}>
+              <Link href="/help" className={`${styles.navItem} ${pathname === '/help' ? styles.navActive : ''}`}>
                 <HelpCircle size={18} /> Trợ giúp
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
       </nav>
-
-      <div className={styles.sidebarFooter}>
-        <div className={styles.upgradeCard}>
-          <div className={styles.upgradeContent}>
-            <h4 className={styles.upgradeTitle}><Sparkles size={14} className={styles.sparkleIcon}/> Tới Premium</h4>
-            <p>Đăng nhập để trải nghiệm AI luật không giới hạn</p>
-          </div>
-          <Link href="/login" className={styles.upgradeBtn} style={{ display: 'inline-block', textAlign: 'center', textDecoration: 'none' }}>Đăng nhập / Đăng ký</Link>
-        </div>
-      </div>
     </aside>
   );
 }

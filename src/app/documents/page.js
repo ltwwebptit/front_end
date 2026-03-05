@@ -20,6 +20,39 @@ const legalDocs = [
 export default function DocumentsPage() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [agencyFilter, setAgencyFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [yearFilter, setYearFilter] = useState('');
+  const itemsPerPage = 5;
+
+  // Search & Filter logic
+  const filteredDocs = legalDocs.filter(doc => {
+    const matchesSearch = doc.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         doc.number.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesAgency = !agencyFilter || doc.agency === agencyFilter;
+    const matchesType = !typeFilter || doc.type === typeFilter;
+    const matchesYear = !yearFilter || doc.date.includes(yearFilter);
+    
+    return matchesSearch && matchesAgency && matchesType && matchesYear;
+  });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredDocs.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentDocs = filteredDocs.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className={styles.docsContainer}>
@@ -44,7 +77,7 @@ export default function DocumentsPage() {
                 className={styles.searchInput} 
                 placeholder="Nhập tên văn bản, số hiệu, hoặc từ khóa (VD: Luật Doanh Nghiệp)..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleSearchChange}
               />
               <button className={styles.searchBtn}>Tìm kiếm văn bản</button>
             </div>
@@ -52,20 +85,52 @@ export default function DocumentsPage() {
             {/* Filters */}
             <div className={styles.filterGroup}>
               <div className={styles.filterLabel}><Filter size={16}/> Lọc nâng cao:</div>
-              <div className={styles.filterDropdown}>
+              
+              <div className={styles.filterItem}>
                 <Building size={14} className={styles.dropdownIcon} />
-                <span>Cơ quan ban hành</span>
-                <ChevronDown size={14} />
+                <select 
+                  className={styles.filterSelect}
+                  value={agencyFilter}
+                  onChange={(e) => { setAgencyFilter(e.target.value); setCurrentPage(1); }}
+                >
+                  <option value="">Cơ quan ban hành</option>
+                  <option value="Quốc hội">Quốc hội</option>
+                  <option value="Chính phủ">Chính phủ</option>
+                  <option value="Bộ KH&ĐT">Bộ KH&ĐT</option>
+                  <option value="Bộ Công an">Bộ Công an</option>
+                </select>
               </div>
-              <div className={styles.filterDropdown}>
+
+              <div className={styles.filterItem}>
                 <FileText size={14} className={styles.dropdownIcon} />
-                <span>Loại văn bản</span>
-                <ChevronDown size={14} />
+                <select 
+                  className={styles.filterSelect}
+                  value={typeFilter}
+                  onChange={(e) => { setTypeFilter(e.target.value); setCurrentPage(1); }}
+                >
+                  <option value="">Loại văn bản</option>
+                  <option value="Luật">Luật</option>
+                  <option value="Bộ luật">Bộ luật</option>
+                  <option value="Nghị định">Nghị định</option>
+                  <option value="Thông tư">Thông tư</option>
+                </select>
               </div>
-              <div className={styles.filterDropdown}>
+
+              <div className={styles.filterItem}>
                 <Calendar size={14} className={styles.dropdownIcon} />
-                <span>Năm ban hành</span>
-                <ChevronDown size={14} />
+                <select 
+                  className={styles.filterSelect}
+                  value={yearFilter}
+                  onChange={(e) => { setYearFilter(e.target.value); setCurrentPage(1); }}
+                >
+                  <option value="">Năm ban hành</option>
+                  <option value="2022">2022</option>
+                  <option value="2021">2021</option>
+                  <option value="2020">2020</option>
+                  <option value="2019">2019</option>
+                  <option value="2015">2015</option>
+                  <option value="2014">2014</option>
+                </select>
               </div>
             </div>
           </div>
@@ -73,7 +138,7 @@ export default function DocumentsPage() {
           {/* Table Section */}
           <div className={styles.tableContainer}>
             <div className={styles.tableHeaderWrapper}>
-              <div className={styles.tableStats}>Tìm thấy <strong>12,450</strong> văn bản</div>
+              <div className={styles.tableStats}>Tìm thấy <strong>{filteredDocs.length}</strong> văn bản</div>
               <div className={styles.tableSort}>
                 Sắp xếp theo: <strong>Mới nhất</strong> <ChevronDown size={14} />
               </div>
@@ -91,40 +156,68 @@ export default function DocumentsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {legalDocs.map((doc) => (
-                    <tr 
-                      key={doc.id} 
-                      className={styles.tableRow}
-                      onClick={() => router.push(`/documents/${doc.id}`)}
-                    >
-                      <td className={styles.tdNumber}>{doc.number}</td>
-                      <td className={styles.tdTitle}>
-                        <div className={styles.docTypeBadge}>{doc.type}</div>
-                        {doc.title}
-                      </td>
-                      <td className={styles.tdDate}>{doc.date}</td>
-                      <td className={styles.tdAgency}>{doc.agency}</td>
-                      <td>
-                        <span className={`${styles.statusBadge} ${doc.status === 'Hết hiệu lực' ? styles.statusExpired : styles.statusActive}`}>
-                          {doc.status}
-                        </span>
+                  {currentDocs.length > 0 ? (
+                    currentDocs.map((doc) => (
+                      <tr 
+                        key={doc.id} 
+                        className={styles.tableRow}
+                        onClick={() => router.push(`/documents/${doc.id}`)}
+                      >
+                        <td className={styles.tdNumber}>{doc.number}</td>
+                        <td className={styles.tdTitle}>
+                          <div className={styles.docTypeBadge}>{doc.type}</div>
+                          {doc.title}
+                        </td>
+                        <td className={styles.tdDate}>{doc.date}</td>
+                        <td className={styles.tdAgency}>{doc.agency}</td>
+                        <td>
+                          <span className={`${styles.statusBadge} ${doc.status === 'Hết hiệu lực' ? styles.statusExpired : styles.statusActive}`}>
+                            {doc.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
+                        Không tìm thấy văn bản pháp luật nào phù hợp.
                       </td>
                     </tr>
-                  ))}
+                  )}
                 </tbody>
               </table>
             </div>
 
             {/* Pagination */}
-            <div className={styles.pagination}>
-              <button className={styles.pageBtn} disabled><ChevronLeft size={16} /></button>
-              <button className={`${styles.pageBtn} ${styles.pageActive}`}>1</button>
-              <button className={styles.pageBtn}>2</button>
-              <button className={styles.pageBtn}>3</button>
-              <span className={styles.pageDots}>...</span>
-              <button className={styles.pageBtn}>1245</button>
-              <button className={styles.pageBtn}><ChevronRight size={16} /></button>
-            </div>
+            {totalPages > 0 && (
+              <div className={styles.pagination}>
+                <button 
+                  className={styles.pageBtn} 
+                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  <ChevronLeft size={16} />
+                </button>
+                
+                {[...Array(totalPages)].map((_, i) => (
+                  <button 
+                    key={i + 1}
+                    className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.pageActive : ''}`}
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                
+                <button 
+                  className={styles.pageBtn} 
+                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
 
           </div>
         </div>

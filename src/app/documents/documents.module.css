@@ -4,6 +4,7 @@
   height: 100%;
   width: 100%;
   position: relative;
+  overflow-x: hidden;
 }
 
 .header {
@@ -65,7 +66,7 @@
   font-size: 2.25rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -89,13 +90,13 @@
   border: 1px solid rgba(255, 255, 255, 1);
   border-radius: var(--radius-full);
   padding: 0.5rem;
-  box-shadow: 0 20px 40px rgba(0, 158, 193, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
+  box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
   transition: all 0.3s ease;
   margin-bottom: 1.5rem;
 }
 
 .searchBarWrapper:focus-within {
-  box-shadow: 0 25px 45px rgba(0, 158, 193, 0.15), 0 0 0 3px rgba(0, 158, 193, 0.2);
+  box-shadow: 0 25px 45px rgba(249, 115, 22, 0.15), 0 0 0 3px rgba(249, 115, 22, 0.2);
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.95);
 }
@@ -121,7 +122,7 @@
 }
 
 .searchBtn {
-  background: linear-gradient(135deg, #009EC1 0%, #0284c7 100%);
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
   color: white;
   border: none;
   border-radius: var(--radius-full);
@@ -129,13 +130,13 @@
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
   transition: all 0.3s ease;
 }
 
 .searchBtn:hover {
   transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 158, 193, 0.4);
+  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
 }
 
 /* Filters */
@@ -158,31 +159,40 @@
   margin-right: 0.5rem;
 }
 
-.filterDropdown {
+.filterItem {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  padding: 0.6rem 1rem;
+  padding: 0 1rem;
   border-radius: var(--radius-full);
   font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-heading);
-  cursor: pointer;
   transition: all 0.2s;
   box-shadow: var(--shadow-sm);
 }
 
-.filterDropdown:hover {
+.filterItem:hover {
   background: rgba(255, 255, 255, 0.9);
-  color: var(--primary);
-  border-color: rgba(0, 158, 193, 0.3);
+  border-color: rgba(249, 115, 22, 0.3);
+}
+
+.filterSelect {
+  border: none;
+  background: transparent;
+  padding: 0.6rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-heading);
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
 .dropdownIcon {
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 /* Table Section */
@@ -192,7 +202,7 @@
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-xl);
   padding: 2rem;
-  box-shadow: 0 15px 35px rgba(0, 158, 193, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(139, 92, 246, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .tableHeaderWrapper {
@@ -258,7 +268,7 @@
 .tableRow:hover {
   background: rgba(255, 255, 255, 0.9);
   transform: scale(1.01);
-  box-shadow: 0 10px 20px rgba(0, 158, 193, 0.05);
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.05);
 }
 
 .docTable td {
@@ -363,14 +373,14 @@
 }
 
 .pageActive {
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   color: white;
   border: none;
-  box-shadow: 0 4px 10px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
 }
 
 .pageActive:hover:not(:disabled) {
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   color: white;
 }
 

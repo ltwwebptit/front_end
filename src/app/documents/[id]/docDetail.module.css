@@ -165,12 +165,12 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 158, 193, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(249, 115, 22, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .aiHeader {
   padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, rgba(0, 158, 193, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.6);
 }
 
@@ -180,7 +180,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -267,17 +267,17 @@
 
 .smartNavBtn:hover {
   background: white;
-  border-color: rgba(0, 158, 193, 0.3);
+  border-color: rgba(249, 115, 22, 0.3);
   color: var(--primary);
   transform: translateX(2px);
-  box-shadow: 0 4px 10px rgba(0, 158, 193, 0.05);
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.05);
 }
 
 /* In-Panel Chat */
 .panelChat {
   margin-top: auto;
-  background: rgba(0, 158, 193, 0.03);
-  border: 1px solid rgba(0, 158, 193, 0.15);
+  background: rgba(249, 115, 22, 0.03);
+  border: 1px solid rgba(249, 115, 22, 0.15);
   border-radius: var(--radius-lg);
   padding: 1.25rem;
 }
@@ -328,7 +328,7 @@
 .chatInput:focus {
   background: white;
   border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(0, 158, 193, 0.1);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.1);
 }
 
 .chatSendBtn {
@@ -337,7 +337,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #009EC1 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #F97316 0%, #8B5CF6 100%);
   color: white;
   border: none;
   border-radius: var(--radius-full);

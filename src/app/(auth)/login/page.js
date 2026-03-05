@@ -2,24 +2,29 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Scale, Mail, Lock, ArrowRight, Github, Chrome } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Github, Chrome, Facebook } from 'lucide-react';
 import styles from './auth.module.css';
+import { storage } from '../../../utils/storage';
+import { useRouter } from 'next/navigation';
+import AiGavelIcon from '../../../components/AiGavelIcon';
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simulate login
-    window.location.href = '/';
+    storage.login();
+    router.push('/');
   };
 
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
         <div className={styles.brandContainer}>
-          <div className={styles.brandIcon}><Scale size={32} /></div>
+          <div className={styles.brandIcon}><AiGavelIcon size={32} /></div>
           <h1 className={styles.brandTitle}>AI Tra Cứu Luật</h1>
         </div>
         
@@ -73,7 +78,7 @@ export default function LoginPage() {
             <Chrome size={20} /> Google
           </button>
           <button className={styles.socialBtn}>
-            <Github size={20} /> Github
+            <Facebook size={20} /> Facebook
           </button>
         </div>
 

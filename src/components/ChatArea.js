@@ -1,15 +1,27 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
-import { SendHorizontal, Paperclip, ChevronDown, Sparkles, User, Scale, LogOut, Settings } from 'lucide-react';
+import { SendHorizontal, Paperclip, ChevronDown, Sparkles, User, LogOut, Settings } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import styles from './ChatArea.module.css';
+import AiGavelIcon from './AiGavelIcon';
+import { storage } from '../utils/storage';
 
-export default function ChatArea() {
-  const [messages, setMessages] = useState([]);
+export default function ChatArea({ messages, setMessages }) {
+  const router = useRouter();
   const [inputVal, setInputVal] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -62,7 +74,13 @@ export default function ChatArea() {
                 <Settings size={16} /> Cài đặt & Hồ sơ
               </Link>
               <div className={styles.dropdownDivider}></div>
-              <button className={`${styles.dropdownItem} ${styles.dropdownLogout}`}>
+              <button 
+                className={`${styles.dropdownItem} ${styles.dropdownLogout}`}
+                onClick={() => {
+                  storage.logout();
+                  router.push('/login');
+                }}
+              >
                 <LogOut size={16} /> Đăng xuất
               </button>
             </div>
@@ -73,7 +91,7 @@ export default function ChatArea() {
       <div className={styles.chatContainer}>
         {messages.length === 0 ? (
           <div className={styles.welcomeScreen}>
-            <div className={styles.brandIcon}><Scale size={48} strokeWidth={1.5} /></div>
+            <div className={styles.brandIcon}><AiGavelIcon size={48} /></div>
             <h2 className={styles.welcomeTitle}>
               Trợ lý pháp lý AI <Sparkles size={24} className={styles.sparkleTitle} />
             </h2>
@@ -100,7 +118,7 @@ export default function ChatArea() {
               <div key={idx} className={`${styles.messageWrapper} ${m.role === 'user' ? styles.msgUser : styles.msgAi}`}>
                 {m.role === 'ai' && (
                   <div className={styles.msgAvatarWrapper}>
-                    <div className={styles.msgAvatarAi}><Scale size={16} /></div>
+                    <div className={styles.msgAvatarAi}><AiGavelIcon size={20} color="white" /></div>
                   </div>
                 )}
                 <div className={styles.messageBubble}>
@@ -113,6 +131,7 @@ export default function ChatArea() {
                 )}
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
         )}
       </div>

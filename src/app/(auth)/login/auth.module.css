@@ -16,9 +16,7 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius-xl);
   padding: 3rem 2.5rem;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 25px 50px -12px rgba(0, 158, 193, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
   transform: translateY(0);
   animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -44,15 +42,13 @@
   height: 48px;
   background: linear-gradient(135deg, var(--primary) 0%, #8B5CF6 100%);
   color: white;
-  border-radius: var(--radius-full);
-  box-shadow: 0 8px 20px rgba(0, 158, 193, 0.3);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
 }
 
 .brandTitle {
   font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -114,8 +110,8 @@
 .inputField:focus {
   outline: none;
   background: white;
-  border-color: rgba(0, 158, 193, 0.6);
-  box-shadow: 0 0 0 3px rgba(0, 158, 193, 0.1), inset 0 1px 2px rgba(0,0,0,0.02);
+  border-color: rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1), inset 0 1px 2px rgba(0,0,0,0.02);
 }
 
 .inputGroup:focus-within .inputPrefix {
@@ -160,7 +156,7 @@
   width: 100%;
   padding: 1rem;
   margin-top: 0.5rem;
-  background: linear-gradient(to right, #009EC1, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #8B5CF6);
   color: white;
   border-radius: var(--radius-md);
   font-size: 1.05rem;
@@ -169,13 +165,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 158, 193, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(249, 115, 22, 0.4);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .submitBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 15px 35px -5px rgba(0, 158, 193, 0.5);
+  box-shadow: 0 15px 35px -5px rgba(249, 115, 22, 0.5);
 }
 
 .submitBtn:active {
@@ -245,7 +241,7 @@
 
 .successIcon {
   margin-bottom: 1rem;
-  background: rgba(0, 158, 193, 0.1);
+  background: rgba(139, 92, 246, 0.1);
   padding: 1rem;
   border-radius: var(--radius-full);
   display: inline-flex;
