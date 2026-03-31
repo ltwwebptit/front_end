@@ -32,7 +32,7 @@
 }
 
 .logoIconBg {
-  background: linear-gradient(135deg, #F97316 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #F97316 0%, #3B82F6 100%);
   width: 38px;
   height: 38px;
   border-radius: 12px;
@@ -45,7 +45,7 @@
 .logoText {
   font-size: 1.25rem;
   font-weight: 800;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -189,7 +189,7 @@
 
 .upgradeBtn {
   width: 100%;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   color: white;
   padding: 0.6rem;
   border-radius: var(--radius-md);

@@ -114,7 +114,7 @@
   display: inline-flex;
   align-items: center;
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   color: white;
   border-radius: 20px;
   font-size: 0.8rem;
@@ -171,7 +171,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #F97316, #8B5CF6);
+  background: linear-gradient(to bottom, #F97316, #3B82F6);
 }
 
 .tabDivider {
@@ -318,7 +318,7 @@
 .primaryBtn {
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   color: white;
   border: none;
   font-weight: 700;
@@ -355,7 +355,7 @@
 .planName {
   font-size: 1.15rem;
   font-weight: 800;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -402,7 +402,7 @@
 
 .progressFill {
   height: 100%;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   border-radius: 4px;
 }
 
@@ -521,7 +521,7 @@
 }
 
 input:checked + .slider {
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
 }
 
 input:checked + .slider:before {

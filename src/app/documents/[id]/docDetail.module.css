@@ -180,14 +180,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(to right, #F97316, #8B5CF6);
+  background: linear-gradient(to right, #F97316, #3B82F6);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .sparkleIcon {
-  color: #8B5CF6;
+  color: #3B82F6;
 }
 
 .aiContent {
@@ -337,7 +337,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #F97316 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #F97316 0%, #3B82F6 100%);
   color: white;
   border: none;
   border-radius: var(--radius-full);
