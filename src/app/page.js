@@ -27,9 +27,9 @@ export default function Home() {
     if (messages.length > 0) {
       const id = currentSessionId || Date.now();
       if (!currentSessionId) setCurrentSessionId(id);
-      
+
       const sessionTitle = messages[0].text.substring(0, 30) + (messages[0].text.length > 30 ? '...' : '');
-      
+
       storage.saveSession({
         id,
         title: sessionTitle,
@@ -50,7 +50,7 @@ export default function Home() {
   return (
     <div className="app-container">
       <Sidebar onNewChat={resetChat} />
-       <ChatArea messages={messages} setMessages={setMessages} />
+      <ChatArea messages={messages} setMessages={setMessages} />
     </div>
   );
 }
