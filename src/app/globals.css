@@ -21,6 +21,23 @@
   --shadow-float: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
+[data-theme='dark'] {
+  --bg-main: #0F172A;
+  --bg-sidebar: #1E293B;
+  --bg-secondary: #0F172A;
+  --border-light: #334155;
+  --text-heading: #F8FAFC;
+  --text-body: #CBD5E1;
+  --text-muted: #94A3B8;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.3);
+}
+
+[data-theme='dark'] body {
+  background: var(--bg-main) !important;
+  animation: none !important;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft, Download, Printer, Share2, Sparkles, MessageSquare, ChevronRight, Scale, CheckCircle2 } from 'lucide-react';
+import { apiFetch } from '../../../utils/api';
 import styles from './docDetail.module.css';
 
 export default function DocumentDetail() {
@@ -11,6 +12,25 @@ export default function DocumentDetail() {
   
   // Dummy text state for AI chat inside the panel
   const [aiInput, setAiInput] = useState('');
+  const [document, setDocument] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (params.id) {
+      fetchDocDetail();
+    }
+  }, [params.id]);
+
+  const fetchDocDetail = async () => {
+    try {
+      const data = await apiFetch(`/api/legal-documents/${params.id}`, { method: "GET" });
+      setDocument(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -19,53 +39,38 @@ export default function DocumentDetail() {
         <button onClick={() => router.back()} className={styles.backBtn}>
           <ArrowLeft size={20} /> Quay lại
         </button>
-        <div className={styles.headerActions}>
-          <button className={styles.iconBtn} title="Tải xuống"><Download size={18} /></button>
-          <button className={styles.iconBtn} title="In văn bản"><Printer size={18} /></button>
-          <button className={styles.iconBtn} title="Chia sẻ"><Share2 size={18} /></button>
-        </div>
       </header>
 
       <div className={styles.splitLayout}>
         {/* Left: Reading Area */}
         <div className={styles.readingArea}>
-          <div className={styles.docPaper}>
-            <div className={styles.docMeta}>
-              <div className={styles.statusBadge}>Còn hiệu lực</div>
-              <p className={styles.docNumber}>Số: 59/2020/QH14</p>
-              <h1 className={styles.docTitle}>LUẬT DOANH NGHIỆP 2020</h1>
-              <p className={styles.docSubMeta}>Ban hành: 17/06/2020 • Cơ quan ban hành: Quốc hội</p>
-            </div>
-            
-            <div className={styles.docBody}>
-              <h2 className={styles.chapterTitle}>CHƯƠNG I: QUY ĐỊNH CHUNG</h2>
+          {loading ? (
+            <div style={{ padding: "2rem", textAlign: "center" }}>Đang tải văn bản...</div>
+          ) : !document ? (
+            <div style={{ padding: "2rem", textAlign: "center" }}>Không tìm thấy văn bản!</div>
+          ) : (
+            <div className={styles.docPaper}>
+              <div className={styles.docMeta}>
+                <div className={styles.statusBadge}>{document.status ? 'Còn hiệu lực' : 'Hết hiệu lực'}</div>
+                <p className={styles.docNumber}>Số: {document.title.split(' ')[0]}</p>
+                <h1 className={styles.docTitle}>{document.title.toUpperCase()}</h1>
+                <p className={styles.docSubMeta}>Ban hành: {document.issueDate ? document.issueDate.split('T')[0] : ''} • Cơ quan ban hành: {document.issuingAgency}</p>
+                {document.link && (
+                  <a href={document.link} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", color: "var(--primary)", fontSize: "0.875rem", fontWeight: 500, marginTop: "0.5rem", textDecoration: "none" }}>
+                    <Scale size={16} /> Xem văn bản gốc (Nguồn)
+                  </a>
+                )}
+              </div>
               
-              <h3 className={styles.articleTitle}>Điều 1. Phạm vi điều chỉnh</h3>
-              <p className={styles.articleText}>
-                Luật này quy định về việc thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động có liên quan của doanh nghiệp, bao gồm công ty trách nhiệm hữu hạn, công ty cổ phần, công ty hợp danh và doanh nghiệp tư nhân; quy định về nhóm công ty.
-              </p>
-
-              <h3 className={styles.articleTitle}>Điều 2. Đối tượng áp dụng</h3>
-              <p className={styles.articleText}>
-                1. Các doanh nghiệp.<br/>
-                2. Cơ quan, tổ chức, cá nhân có liên quan đến việc thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động có liên quan của doanh nghiệp.
-              </p>
-
-              <h3 className={styles.articleTitle}>Điều 3. Áp dụng Luật Doanh nghiệp và luật khác</h3>
-              <p className={styles.articleText}>
-                Trường hợp luật khác có quy định đặc thù về việc thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động có liên quan của doanh nghiệp thì áp dụng quy định của luật đó.
-              </p>
-              
-              <h2 className={styles.chapterTitle}>CHƯƠNG II: THÀNH LẬP DOANH NGHIỆP</h2>
-              <h3 className={styles.articleTitle}>Điều 17. Quyền thành lập, góp vốn, mua cổ phần, mua phần vốn góp và quản lý doanh nghiệp</h3>
-              <p className={styles.articleText}>
-                1. Tổ chức, cá nhân có quyền thành lập và quản lý doanh nghiệp tại Việt Nam theo quy định của Luật này, trừ trường hợp quy định tại khoản 2 Điều này.<br/>
-                2. Tổ chức, cá nhân sau đây không có quyền thành lập và quản lý doanh nghiệp tại Việt Nam:<br/>
-                a) Cơ quan nhà nước, đơn vị lực lượng vũ trang nhân dân sử dụng tài sản nhà nước để thành lập doanh nghiệp kinh doanh thu lợi riêng cho cơ quan, đơn vị mình;<br/>
-                b) Cán bộ, công chức, viên chức theo quy định của Luật Cán bộ, công chức và Luật Viên chức;
-              </p>
+              <div className={styles.docBody}>
+                {document.content ? (
+                  <div style={{ whiteSpace: "pre-wrap" }}>{document.content}</div>
+                ) : (
+                  <div>Nội dung văn bản đang được cập nhật...</div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Right: AI Panel */}

@@ -7,17 +7,28 @@ import styles from './auth.module.css';
 import { storage } from '../../../utils/storage';
 import { useRouter } from 'next/navigation';
 import AiGavelIcon from '../../../components/AiGavelIcon';
+import { apiFetch } from '../../../utils/api';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Simulate login
-    storage.login();
-    router.push('/');
+    setError('');
+    
+    try {
+      await apiFetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({ username, password })
+      });
+      storage.login();
+      router.push('/');
+    } catch (err) {
+      setError(err.message || 'Đăng nhập thất bại.');
+    }
   };
 
   return (
@@ -32,14 +43,15 @@ export default function LoginPage() {
         <p className={styles.authSubtitle}>Đăng nhập để tiếp tục trò chuyện với trợ lý pháp lý AI của bạn.</p>
 
         <form onSubmit={handleSubmit} className={styles.authForm}>
+          {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
           <div className={styles.inputGroup}>
             <div className={styles.inputPrefix}><Mail size={18} /></div>
             <input 
-              type="email" 
-              placeholder="Email của bạn" 
+              type="text" 
+              placeholder="Tên đăng nhập (Username)" 
               className={styles.inputField}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -69,18 +81,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className={styles.divider}>
-          <span>Hoặc tiếp tục với</span>
-        </div>
 
-        <div className={styles.socialOptions}>
-          <button className={styles.socialBtn}>
-            <Chrome size={20} /> Google
-          </button>
-          <button className={styles.socialBtn}>
-            <Facebook size={20} /> Facebook
-          </button>
-        </div>
 
         <p className={styles.switchAuthInfo}>
           Chưa có tài khoản? <Link href="/register" className={styles.switchAuthLink}>Đăng ký ngay</Link>

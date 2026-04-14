@@ -1,12 +1,81 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './profile.module.css';
 import { User, CreditCard, Settings, Camera, LogOut, ChevronRight, Shield, Bell } from 'lucide-react';
+import { apiFetch } from '../../utils/api';
+import { storage } from '../../utils/storage';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function ProfilePage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('account');
+  const [profile, setProfile] = useState(null);
+  const [isChangingPwd, setIsChangingPwd] = useState(false);
+  const [oldPwd, setOldPwd] = useState('');
+  const [newPwd, setNewPwd] = useState('');
+  const [theme, setTheme] = useState('system');
+
+  useEffect(() => {
+    fetchProfile();
+    const savedTheme = localStorage.getItem('ai_luat_theme');
+    if (savedTheme) setTheme(savedTheme);
+  }, []);
+
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    if (newTheme === 'system') {
+      localStorage.removeItem('ai_luat_theme');
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    } else {
+      localStorage.setItem('ai_luat_theme', newTheme);
+      if (newTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const data = await apiFetch('/api/auth/profile', { method: 'GET' });
+      setProfile(data);
+    } catch (err) {
+      console.error('Không tải được profile', err);
+    }
+  };
+
+  const handleUpdatePassword = async () => {
+    if (!profile) return;
+    try {
+      await apiFetch('/api/auth/update-password', {
+        method: 'PUT',
+        body: JSON.stringify({
+          username: profile.username,
+          password: oldPwd,
+          newPassword: newPwd
+        })
+      });
+      alert("Đổi mật khẩu thành công!");
+      setIsChangingPwd(false);
+      setOldPwd('');
+      setNewPwd('');
+    } catch (err) {
+      alert(err.message || 'Lỗi đổi mật khẩu');
+    }
+  };
+
+  const handleLogout = () => {
+    // clear token mechanism from cookies may need server support or just local clear
+    storage.logout();
+    router.push('/login');
+  };
 
   return (
     <div className={styles.profileContainer}>
@@ -25,8 +94,8 @@ export default function ProfilePage() {
               </button>
             </div>
             <div className={styles.userInfo}>
-              <h2 className={styles.userName}>Trần Anh Tài</h2>
-              <p className={styles.userEmail}>tai.tran@example.com</p>
+              <h2 className={styles.userName}>{profile ? profile.username : 'Đang tải...'}</h2>
+              <p className={styles.userEmail}>{profile ? profile.email : '...'}</p>
 
             </div>
           </div>
@@ -48,7 +117,7 @@ export default function ProfilePage() {
                 <Settings size={18} /> Cài đặt
               </button>
               <div className={styles.tabDivider}></div>
-              <button className={`${styles.tabBtn} ${styles.logoutBtn}`}>
+              <button className={`${styles.tabBtn} ${styles.logoutBtn}`} onClick={handleLogout}>
                 <LogOut size={18} /> Đăng xuất
               </button>
             </div>
@@ -63,32 +132,31 @@ export default function ProfilePage() {
                   <div className={styles.formGrid}>
                     <div className={styles.formGroup}>
                       <label>Họ và tên</label>
-                      <input type="text" defaultValue="Trần Anh Tài" className={styles.inputField} />
+                      <input type="text" value={profile?.username || ''} disabled className={styles.inputField} />
                     </div>
                     <div className={styles.formGroup}>
                       <label>Email</label>
-                      <input type="email" defaultValue="tai.tran@example.com" className={styles.inputField} />
+                      <input type="email" value={profile?.email || ''} disabled className={styles.inputField} />
                     </div>
                     <div className={styles.formGroup}>
                       <label>Mật khẩu</label>
-                      <button className={styles.actionBtn}>
-                         Đổi mật khẩu <ChevronRight size={16} />
-                      </button>
+                      {!isChangingPwd ? (
+                        <button className={styles.actionBtn} onClick={() => setIsChangingPwd(true)}>
+                           Đổi mật khẩu <ChevronRight size={16} />
+                        </button>
+                      ) : (
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                          <input type="password" placeholder="Mật khẩu cũ" value={oldPwd} onChange={e=>setOldPwd(e.target.value)} className={styles.inputField} />
+                          <input type="password" placeholder="Mật khẩu mới" value={newPwd} onChange={e=>setNewPwd(e.target.value)} className={styles.inputField} />
+                          <button className={styles.primaryBtn} onClick={handleUpdatePassword}>Lưu mật khẩu mới</button>
+                          <button className={styles.outlineBtn} onClick={() => setIsChangingPwd(false)}>Hủy</button>
+                        </div>
+                      )}
                     </div>
                   </div>
                   
-                  <div className={styles.securityBox}>
-                     <Shield size={24} color="var(--primary)" />
-                     <div>
-                       <h4>Xác thực 2 yếu tố (2FA)</h4>
-                       <p>Thêm một lớp bảo mật phụ cho tài khoản của bạn.</p>
-                     </div>
-                     <button className={styles.outlineBtn}>Bật 2FA</button>
-                  </div>
 
-                  <div className={styles.saveAction}>
-                    <button className={styles.primaryBtn}>Lưu thay đổi</button>
-                  </div>
+
                 </div>
               )}
 
@@ -105,10 +173,10 @@ export default function ProfilePage() {
                         <h4>Giao diện Tối/Sáng</h4>
                         <p>Tự động thay đổi theo hệ thống hoặc chọn cứng.</p>
                       </div>
-                      <select className={styles.selectField}>
-                        <option>Tự động</option>
-                        <option>Giao diện Sáng</option>
-                        <option>Giao diện Tối</option>
+                      <select className={styles.selectField} value={theme} onChange={(e) => handleThemeChange(e.target.value)}>
+                        <option value="system">Tự động hệ thống</option>
+                        <option value="light">Giao diện Sáng</option>
+                        <option value="dark">Giao diện Tối</option>
                       </select>
                     </div>
                     

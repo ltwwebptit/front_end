@@ -12,8 +12,22 @@ export default function ChatArea({ messages, setMessages }) {
   const router = useRouter();
   const [inputVal, setInputVal] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [profile, setProfile] = useState(null);
   const dropdownRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const { apiFetch } = await import('../utils/api');
+        const data = await apiFetch('/api/auth/profile', { method: 'GET' });
+        setProfile(data);
+      } catch (err) {
+        console.error("Failed to load profile", err);
+      }
+    }
+    loadProfile();
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -66,8 +80,8 @@ export default function ChatArea({ messages, setMessages }) {
           {isDropdownOpen && (
             <div className={styles.dropdownMenu}>
               <div className={styles.dropdownHeader}>
-                <p className={styles.dropdownName}>Trần Anh Tài</p>
-                <p className={styles.dropdownEmail}>tai.tran@example.com</p>
+                <p className={styles.dropdownName}>{profile ? profile.username : 'Đang tải...'}</p>
+                <p className={styles.dropdownEmail}>{profile ? profile.email : '...'}</p>
               </div>
               <div className={styles.dropdownDivider}></div>
               <Link href="/profile" className={styles.dropdownItem}>

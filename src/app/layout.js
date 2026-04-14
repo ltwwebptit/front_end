@@ -16,6 +16,22 @@ import AuthGuard from "../components/AuthGuard";
 export default function RootLayout({ children }) {
   return (
     <html lang="vi">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var v = localStorage.getItem('ai_luat_theme');
+                  if (v === 'dark' || (!v && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={inter.variable}>
         <AuthGuard>
           {children}

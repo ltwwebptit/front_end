@@ -8,12 +8,26 @@ import styles from '../login/auth.module.css'; // Reusing auth styles
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if(email) {
-      // Simulate API call to send reset email
-      setIsSubmitted(true);
+      try {
+        setLoading(true);
+        setError('');
+        const { apiFetch } = await import('../../../utils/api');
+        await apiFetch('/api/auth/forgot-password', {
+          method: 'POST',
+          body: JSON.stringify({ email })
+        });
+        setIsSubmitted(true);
+      } catch (err) {
+        setError(err.message || 'Lỗi hệ thống. Không thể gửi email.');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -31,6 +45,7 @@ export default function ForgotPasswordPage() {
             <p className={styles.authSubtitle}>Đừng lo lắng! Nhập email liên kết với tài khoản của bạn, chúng tôi sẽ gửi liên kết để đặt lại mật khẩu.</p>
 
             <form onSubmit={handleSubmit} className={styles.authForm}>
+              {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
               <div className={styles.inputGroup}>
                 <div className={styles.inputPrefix}><Mail size={18} /></div>
                 <input 
@@ -43,8 +58,8 @@ export default function ForgotPasswordPage() {
                 />
               </div>
 
-              <button type="submit" className={styles.submitBtn}>
-                Gửi liên kết khôi phục <ArrowRight size={18} />
+              <button type="submit" className={styles.submitBtn} disabled={loading}>
+                {loading ? 'Đang gửi...' : 'Gửi liên kết khôi phục'} <ArrowRight size={18} />
               </button>
             </form>
           </>

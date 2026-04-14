@@ -7,23 +7,39 @@ import styles from '../login/auth.module.css'; // Reusing auth styles
 import { storage } from '../../../utils/storage';
 import { useRouter } from 'next/navigation';
 import AiGavelIcon from '../../../components/AiGavelIcon';
+import { apiFetch } from '../../../utils/api';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [name, setName] = useState('');
+  const [name, setName] = useState(''); // using name as username actually or keep username? BE allows email, username, password.
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    
     if(password !== confirmPassword) {
-      alert('Mật khẩu xác nhận không khớp!');
+      setError('Mật khẩu xác nhận không khớp!');
       return;
     }
-    // Simulate register
-    storage.login();
-    router.push('/');
+    
+    try {
+      // Dùng state name truyền vào username theo API Register
+      await apiFetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, username: name, password })
+      });
+      setSuccess(true);
+      setTimeout(() => {
+        router.push('/login');
+      }, 2000);
+    } catch (err) {
+      setError(err.message || 'Đăng ký thất bại. Email hoặc username có thể đã tồn tại.');
+    }
   };
 
   return (
@@ -38,6 +54,9 @@ export default function RegisterPage() {
         <p className={styles.authSubtitle}>Tham gia cộng đồng tra cứu luật thông minh ngay hôm nay.</p>
 
         <form onSubmit={handleSubmit} className={styles.authForm}>
+          {error && <div style={{ color: 'red', textAlign: 'center', marginBottom: '1rem' }}>{error}</div>}
+          {success && <div style={{ color: 'green', textAlign: 'center', marginBottom: '1rem' }}>Đăng ký thành công! Đang chuyển hướng đăng nhập...</div>}
+          
           <div className={styles.inputGroup}>
             <div className={styles.inputPrefix}><User size={18} /></div>
             <input 
@@ -91,18 +110,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <div className={styles.divider}>
-          <span>Hoặc đăng ký với</span>
-        </div>
 
-        <div className={styles.socialOptions}>
-          <button className={styles.socialBtn}>
-            <Chrome size={20} /> Google
-          </button>
-          <button className={styles.socialBtn}>
-            <Facebook size={20} /> Facebook
-          </button>
-        </div>
 
         <p className={styles.switchAuthInfo}>
           Đã có tài khoản? <Link href="/login" className={styles.switchAuthLink}>Đăng nhập</Link>
