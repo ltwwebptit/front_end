@@ -11,7 +11,8 @@ import { apiFetch } from '../../../utils/api';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [name, setName] = useState(''); // using name as username actually or keep username? BE allows email, username, password.
+  const [name, setName] = useState(''); 
+  const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -37,7 +38,7 @@ export default function RegisterPage() {
       // Dùng state name truyền vào username theo API Register
       await apiFetch("/api/auth/register", {
         method: "POST",
-        body: JSON.stringify({ email, username: name, password })
+        body: JSON.stringify({ email, username: name, password, fullname })
       });
       setSuccess(true);
       setTimeout(() => {
@@ -71,6 +72,18 @@ export default function RegisterPage() {
               className={styles.inputField}
               value={name}
               onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className={styles.inputGroup}>
+            <div className={styles.inputPrefix}><User size={18} /></div>
+            <input 
+              type="text" 
+              placeholder="Họ và tên của bạn" 
+              className={styles.inputField}
+              value={fullname}
+              onChange={(e) => setFullname(e.target.value)}
               required
             />
           </div>

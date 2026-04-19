@@ -25,22 +25,6 @@ export default function AuthGuard({ children }) {
         router.push('/login');
         return;
       }
-
-      try {
-        const data = await apiFetch("/api/auth/profile", { method: "GET" });
-        if (data && data.rolename === "ADMIN") {
-           alert("Lỗi: Trang này dành cho User! Tài khoản Quản trị (Admin) vui lòng đăng nhập ở trang Admin.");
-           await apiFetch("/api/auth/logout", { method: "POST" }).catch(() => {});
-           storage.logout();
-           router.push('/login');
-           return;
-        }
-        setAuthorized(true);
-      } catch (err) {
-        setAuthorized(false);
-        storage.logout();
-        router.push('/login');
-      }
     };
 
     checkAuth();

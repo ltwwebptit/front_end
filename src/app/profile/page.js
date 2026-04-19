@@ -94,7 +94,7 @@ export default function ProfilePage() {
               </button>
             </div>
             <div className={styles.userInfo}>
-              <h2 className={styles.userName}>{profile ? profile.username : 'Đang tải...'}</h2>
+              <h2 className={styles.userName}>{profile ? (profile.fullname || profile.username) : 'Đang tải...'}</h2>
               <p className={styles.userEmail}>{profile ? profile.email : '...'}</p>
 
             </div>
@@ -132,6 +132,10 @@ export default function ProfilePage() {
                   <div className={styles.formGrid}>
                     <div className={styles.formGroup}>
                       <label>Họ và tên</label>
+                      <input type="text" value={profile?.fullname || ''} disabled className={styles.inputField} />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Username</label>
                       <input type="text" value={profile?.username || ''} disabled className={styles.inputField} />
                     </div>
                     <div className={styles.formGroup}>
