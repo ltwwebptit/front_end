@@ -22,6 +22,12 @@ export default function RegisterPage() {
     e.preventDefault();
     setError('');
     
+    const usernameRegex = /^[a-zA-Z0-9._-]+$/;
+    if (!usernameRegex.test(name)) {
+      setError('Tên đăng nhập không được có dấu cách, tiếng Việt hoặc ký tự đặc biệt lạ!');
+      return;
+    }
+    
     if(password !== confirmPassword) {
       setError('Mật khẩu xác nhận không khớp!');
       return;
@@ -61,7 +67,7 @@ export default function RegisterPage() {
             <div className={styles.inputPrefix}><User size={18} /></div>
             <input 
               type="text" 
-              placeholder="Họ và tên" 
+              placeholder="Tên đăng nhập (không dấu cách, không tiếng Việt)" 
               className={styles.inputField}
               value={name}
               onChange={(e) => setName(e.target.value)}
